@@ -1,0 +1,15 @@
+FROM alpine:3.10 
+
+MAINTAINER Gabriel Garrido
+
+RUN   apk update \
+  &&   apk add ca-certificates wget \
+  &&   update-ca-certificates
+
+RUN wget "https://s3.eu-central-1.amazonaws.com/lightstreams-public/lightchain/latest/lightchain-linux-amd64" -O "/usr/bin/lightchain"
+RUN chmod a+x /usr/bin/lightchain
+
+ENTRYPOINT ["sh", "run-lightchain.sh"]
+ADD docker-scripts/run-lightchain.sh .
+
+EXPOSE 8545 26657 26656

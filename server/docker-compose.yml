@@ -6,7 +6,7 @@ services:
     ports:
     - "8060:8060"
     depends_on:
-      - parity
+      - lightchain
       - mongodb
       - kafka
     environment:
@@ -17,17 +17,14 @@ services:
     networks:
       - default
 
-  parity:
+  lightchain:
     build:
       context: .
-      dockerfile: Dockerfile-ParityNode
+      dockerfile: Dockerfile-Lightchain
     ports:
       - "8545:8545"
-      - "8180:8180"
-      - "8546:8546"
     volumes:
-      - $HOME/parity/data:/root/.local/share/io.parity.ethereum
-      - $HOME/parity/log:/data/parity-logs
+      - /tmp/docker-lc:/srv/lightchain
     tty: true
     networks:
       default:
